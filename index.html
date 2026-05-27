@@ -5,194 +5,237 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>בעלי תפקידים – קיבוץ עין השלושה</title>
 <style>
-  body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; padding: 24px; direction: rtl; }
-  h1 { text-align: center; font-size: 22px; margin-bottom: 4px; color: #1a1a1a; }
-  .subtitle { text-align: center; font-size: 13px; color: #777; margin-bottom: 24px; }
-  .table-wrap { overflow-x: auto; }
-  table { width: 100%; max-width: 900px; margin: 0 auto; border-collapse: collapse; background: #fff; font-size: 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
-  thead tr { background: #2c5f2e; color: #fff; }
-  th { padding: 11px 16px; text-align: right; font-weight: 600; font-size: 13px; white-space: nowrap; }
-  th.center, td.center { text-align: center; }
-  tbody tr { border-bottom: 1px solid #e8e8e8; }
-  tbody tr:nth-child(even) { background: #f9faf7; }
-  tbody tr:hover { background: #eef4ee; }
-  td { padding: 10px 16px; color: #333; vertical-align: middle; }
-  td.role { font-weight: 600; color: #1a1a1a; }
-  td.phone { direction: ltr; text-align: right; font-family: monospace; font-size: 13px; color: #2c5f2e; }
-  td.empty { color: #ccc; font-size: 12px; text-align: center; }
-  .section-label { background: #e8f0e8; color: #2c5f2e; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; display: inline-block; }
-  @media (max-width: 600px) { body { padding: 12px; } th, td { padding: 8px 10px; font-size: 13px; } }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: Arial, sans-serif;
+    background: #f0f2f0;
+    direction: rtl;
+    padding-bottom: 32px;
+  }
+
+  header {
+    background: #2c5f2e;
+    color: white;
+    text-align: center;
+    padding: 20px 16px 16px;
+  }
+
+  header h1 { font-size: 20px; margin-bottom: 4px; }
+  header p { font-size: 12px; opacity: 0.75; }
+
+  .search-wrap {
+    padding: 12px 16px;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .search-wrap input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    direction: rtl;
+    font-family: Arial, sans-serif;
+    outline: none;
+  }
+
+  .search-wrap input:focus { border-color: #2c5f2e; }
+
+  .cards { padding: 12px 16px; display: flex; flex-direction: column; gap: 10px; }
+
+  .card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    overflow: hidden;
+    border-right: 4px solid #2c5f2e;
+  }
+
+  .card.deputy { border-right-color: #7aaa7c; }
+
+  .card-header {
+    background: #f7faf7;
+    padding: 10px 14px 8px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .role-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1a3d1c;
+  }
+
+  .card-body { padding: 10px 14px; }
+
+  .person-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .person-row:last-child { border-bottom: none; }
+
+  .person-info { display: flex; flex-direction: column; gap: 1px; }
+
+  .person-label {
+    font-size: 11px;
+    color: #888;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+
+  .person-name { font-size: 15px; color: #1a1a1a; font-weight: 600; }
+
+  .phone-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #2c5f2e;
+    color: white;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-family: monospace;
+    white-space: nowrap;
+    direction: ltr;
+    flex-shrink: 0;
+  }
+
+  .phone-btn:active { background: #1a3d1c; }
+
+  .no-phone {
+    font-size: 13px;
+    color: #ccc;
+    padding: 6px 10px;
+  }
+
+  .no-results {
+    text-align: center;
+    padding: 40px 16px;
+    color: #aaa;
+    font-size: 15px;
+  }
+
+  .count { text-align: center; font-size: 12px; color: #888; margin-top: 4px; }
 </style>
 </head>
 <body>
-<h1>בעלי תפקידים – קיבוץ עין השלושה</h1>
-<div class="subtitle">עדכון: פברואר 2026</div>
-<div class="table-wrap">
-<table>
-  <thead>
-    <tr>
-      <th>תפקיד</th>
-      <th>שם</th>
-      <th>טלפון</th>
-      <th>שם סגן/ית</th>
-      <th>טלפון סגן/ית</th>
-      <th class="center">סיווג</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td class="role">יו"ר צח"י</td>
-      <td>עופר פקרמן</td>
-      <td class="phone">052-3764604</td>
-      <td>אבירן חסון</td>
-      <td class="phone">050-5071693</td>
-      <td class="center"><span class="section-label">חמ"ל</span></td>
-    </tr>
-    <tr>
-      <td class="role">רבש"צ</td>
-      <td>מרסלו כהן</td>
-      <td class="phone">052-3250018</td>
-      <td>ניקו פלסיק</td>
-      <td class="phone">054-2503322</td>
-      <td class="center"><span class="section-label">חמ"ל</span></td>
-    </tr>
-    <tr>
-      <td class="role" style="color:#777; font-weight:400; font-size:13px;">↳ סגן 2</td>
-      <td class="empty">—</td>
-      <td class="phone empty">—</td>
-      <td>דור בן צור</td>
-      <td class="phone">052-9857049</td>
-      <td class="center"><span class="section-label">חמ"ל</span></td>
-    </tr>
-    <tr>
-      <td class="role">מנהלת הקהילה</td>
-      <td>שירי אביב</td>
-      <td class="phone">050-5915535</td>
-      <td class="empty">—</td>
-      <td class="phone empty">—</td>
-      <td class="center"><span class="section-label">בעל תפקיד</span></td>
-    </tr>
-    <tr>
-      <td class="role">רפואה</td>
-      <td>אבי מרום</td>
-      <td class="phone">052-8262080</td>
-      <td>הודיה איתם</td>
-      <td class="phone">054-6224051</td>
-      <td class="center"><span class="section-label">חמ"ל</span></td>
-    </tr>
-    <tr>
-      <td class="role">רווחה</td>
-      <td>דקלה יסעור</td>
-      <td class="phone">052-8105971</td>
-      <td>יסמין מרום</td>
-      <td class="phone">052-8272080</td>
-      <td class="center"><span class="section-label">בעל תפקיד</span></td>
-    </tr>
-    <tr>
-      <td class="role">תשתיות וקבלני חוץ</td>
-      <td>ברוכי מרביד</td>
-      <td class="phone">052-3925917</td>
-      <td>חנה פקרמן</td>
-      <td class="phone">054-7915196</td>
-      <td class="center"><span class="section-label">בעל תפקיד</span></td>
-    </tr>
-    <tr>
-      <td class="role">חינוך</td>
-      <td>קלייר בשקיר</td>
-      <td class="phone">052-3260059</td>
-      <td>אור ויצמן</td>
-      <td class="phone">058-4347063</td>
-      <td class="center"><span class="section-label">בעל תפקיד</span></td>
-    </tr>
-    <tr>
-      <td class="role">קישור</td>
-      <td>גדעון דיאור</td>
-      <td class="phone">052-6688854</td>
-      <td class="empty">—</td>
-      <td class="phone empty">—</td>
-      <td class="center"><span class="section-label">חמ"ל</span></td>
-    </tr>
-    <tr>
-      <td class="role">מידע לציבור</td>
-      <td>שחר זגורי</td>
-      <td class="phone">050-2613578</td>
-      <td>אורלי מזרחי</td>
-      <td class="phone">052-3948088</td>
-      <td class="center"><span class="section-label">בעל תפקיד</span></td>
-    </tr>
-    <tr>
-      <td class="role">צמ"ד</td>
-      <td>מריוס דרייר</td>
-      <td class="phone">053-7683766</td>
-      <td>יוסי לוי</td>
-      <td class="phone">054-2415731</td>
-      <td class="center"><span class="section-label">בעל תפקיד</span></td>
-    </tr>
-    <tr>
-      <td class="role">תרבות</td>
-      <td>שיין לוי</td>
-      <td class="phone">058-4524029</td>
-      <td>שחף פלסיק</td>
-      <td class="phone">054-6939242</td>
-      <td class="center"><span class="section-label">בעל תפקיד</span></td>
-    </tr>
-    <tr>
-      <td class="role">צעירים וש"ש</td>
-      <td>פלג קרישבויים</td>
-      <td class="phone">053-6274202</td>
-      <td>מיטל לפלר</td>
-      <td class="phone">052-4501572</td>
-      <td class="center"><span class="section-label">בעל תפקיד</span></td>
-    </tr>
-    <tr>
-      <td class="role">מזכירות</td>
-      <td>דנה דהרי</td>
-      <td class="phone">054-7917871</td>
-      <td class="phone">050-4976470</td>
-      <td class="center"><span class="section-label">בעל תפקיד</span></td>
-    </tr>
-    <tr>
-      <td class="role">יח"צ</td>
-      <td>שירי אביב</td>
-      <td class="phone">050-5915535</td>
-      <td>עדיאל פורת</td>
-      <td class="phone">050-3291115</td>
-      <td class="center"><span class="section-label">בעל תפקיד</span></td>
-    </tr>
-    <tr>
-      <td class="role">מרכז המשק</td>
-      <td>עדיאל פורת</td>
-      <td class="phone">050-3291115</td>
-      <td class="empty">—</td>
-      <td class="phone empty">—</td>
-      <td class="center"><span class="section-label">בעל תפקיד</span></td>
-    </tr>
-    <tr>
-      <td class="role">גזבר</td>
-      <td>מנדי</td>
-      <td class="phone">054-2569612</td>
-      <td class="empty">—</td>
-      <td class="phone empty">—</td>
-      <td class="center"><span class="section-label">בעל תפקיד</span></td>
-    </tr>
-    <tr>
-      <td class="role">הנהל"ח</td>
-      <td>דומיניק</td>
-      <td class="phone">052-4486149</td>
-      <td>נטלי</td>
-      <td class="phone">050-8710633</td>
-      <td class="center"><span class="section-label">בעל תפקיד</span></td>
-    </tr>
-    <tr>
-      <td class="role">רכזת פינוי</td>
-      <td>בתיה אונר</td>
-      <td class="phone">052-3956913</td>
-      <td>אלה סוסקין</td>
-      <td class="phone">052-4269798</td>
-      <td class="center"><span class="section-label">פעילים</span></td>
-    </tr>
-  </tbody>
-</table>
+
+<header>
+  <h1>בעלי תפקידים</h1>
+  <p>קיבוץ עין השלושה · עדכון פברואר 2026</p>
+</header>
+
+<div class="search-wrap">
+  <input type="text" id="searchInput" placeholder="🔍  חיפוש לפי שם או תפקיד..." oninput="filter()">
+  <div class="count" id="countLabel"></div>
 </div>
+
+<div class="cards" id="cardsContainer"></div>
+
+<script>
+const data = [
+  { role: 'יו"ר צח"י',             name: 'עופר פקרמן',        phone: '052-3764604', deputy: 'אבירן חסון',    deputyPhone: '050-5071693' },
+  { role: 'רבש"צ',                  name: 'מרסלו כהן',         phone: '052-3250018', deputy: 'ניקו פלסיק',    deputyPhone: '054-2503322', deputy2: 'דור בן צור', deputy2Phone: '052-9857049' },
+  { role: 'מנהלת הקהילה',           name: 'שירי אביב',         phone: '050-5915535', deputy: '',              deputyPhone: '' },
+  { role: 'רפואה',                  name: 'אבי מרום',          phone: '052-8262080', deputy: 'הודיה איתם',   deputyPhone: '054-6224051' },
+  { role: 'רווחה',                  name: 'דקלה יסעור',        phone: '052-8105971', deputy: 'יסמין מרום',   deputyPhone: '052-8272080' },
+  { role: 'תשתיות וקבלני חוץ',      name: 'ברוכי מרביד',       phone: '052-3925917', deputy: 'חנה פקרמן',    deputyPhone: '054-7915196' },
+  { role: 'חינוך',                  name: 'קלייר בשקיר',       phone: '052-3260059', deputy: 'אור ויצמן',    deputyPhone: '058-4347063' },
+  { role: 'קישור',                  name: 'גדעון דיאור',       phone: '052-6688854', deputy: '',              deputyPhone: '' },
+  { role: 'מידע לציבור',            name: 'שחר זגורי',         phone: '050-2613578', deputy: 'אורלי מזרחי',  deputyPhone: '052-3948088' },
+  { role: 'צמ"ד',                   name: 'מריוס דרייר',       phone: '053-7683766', deputy: 'יוסי לוי',     deputyPhone: '054-2415731' },
+  { role: 'תרבות',                  name: 'שיין לוי',          phone: '058-4524029', deputy: 'שחף פלסיק',    deputyPhone: '054-6939242' },
+  { role: 'צעירים וש"ש',            name: 'פלג קרישבויים',     phone: '053-6274202', deputy: 'מיטל לפלר',    deputyPhone: '052-4501572' },
+  { role: 'מזכירות',                name: 'דנה דהרי',          phone: '054-7917871', deputy: 'בת אור לפלר',  deputyPhone: '050-4976470' },
+  { role: 'יח"צ',                   name: 'שירי אביב',         phone: '050-5915535', deputy: 'עדיאל פורת',   deputyPhone: '050-3291115' },
+  { role: 'מרכז המשק',              name: 'עדיאל פורת',        phone: '050-3291115', deputy: '',              deputyPhone: '' },
+  { role: 'גזבר',                   name: 'מנדי',              phone: '054-2569612', deputy: '',              deputyPhone: '' },
+  { role: 'הנהל"ח',                 name: 'דומיניק',           phone: '052-4486149', deputy: 'נטלי',         deputyPhone: '050-8710633' },
+  { role: 'רכזת פינוי',             name: 'בתיה אונר',         phone: '052-3956913', deputy: 'אלה סוסקין',   deputyPhone: '052-4269798' },
+];
+
+function phoneBtn(phone) {
+  if (!phone) return '<span class="no-phone">—</span>';
+  return `<a class="phone-btn" href="tel:${phone}">📞 ${phone}</a>`;
+}
+
+function renderCard(item) {
+  const hasDeputy  = item.deputy && item.deputy.trim();
+  const hasDeputy2 = item.deputy2 && item.deputy2.trim();
+
+  let deputyRows = '';
+  if (hasDeputy) {
+    deputyRows += `
+      <div class="person-row">
+        <div class="person-info">
+          <span class="person-label">סגן/ית</span>
+          <span class="person-name">${item.deputy}</span>
+        </div>
+        ${phoneBtn(item.deputyPhone)}
+      </div>`;
+  }
+  if (hasDeputy2) {
+    deputyRows += `
+      <div class="person-row">
+        <div class="person-info">
+          <span class="person-label">סגן 2</span>
+          <span class="person-name">${item.deputy2}</span>
+        </div>
+        ${phoneBtn(item.deputy2Phone)}
+      </div>`;
+  }
+
+  return `
+    <div class="card" data-role="${item.role}" data-name="${item.name} ${item.deputy || ''} ${item.deputy2 || ''}">
+      <div class="card-header">
+        <div class="role-title">${item.role}</div>
+      </div>
+      <div class="card-body">
+        <div class="person-row">
+          <div class="person-info">
+            <span class="person-label">ממונה</span>
+            <span class="person-name">${item.name}</span>
+          </div>
+          ${phoneBtn(item.phone)}
+        </div>
+        ${deputyRows}
+      </div>
+    </div>`;
+}
+
+function render(items) {
+  const container = document.getElementById('cardsContainer');
+  if (!items.length) {
+    container.innerHTML = '<div class="no-results">לא נמצאו תוצאות 🔍</div>';
+  } else {
+    container.innerHTML = items.map(renderCard).join('');
+  }
+  document.getElementById('countLabel').textContent = `${items.length} תפקידים`;
+}
+
+function filter() {
+  const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  if (!q) { render(data); return; }
+  const filtered = data.filter(item =>
+    item.role.includes(q) ||
+    item.name.toLowerCase().includes(q) ||
+    (item.deputy || '').toLowerCase().includes(q) ||
+    (item.deputy2 || '').toLowerCase().includes(q)
+  );
+  render(filtered);
+}
+
+render(data);
+</script>
 </body>
 </html>
