@@ -11,7 +11,7 @@
     font-family: Arial, sans-serif;
     background: #f0f2f0;
     direction: rtl;
-    padding-bottom: 32px;
+    padding-bottom: 48px;
   }
 
   header {
@@ -19,11 +19,26 @@
     color: white;
     text-align: center;
     padding: 20px 16px 16px;
+    position: relative;
   }
-
   header h1 { font-size: 20px; margin-bottom: 4px; }
-  header p { font-size: 12px; opacity: 0.75; }
+  header p  { font-size: 12px; opacity: 0.75; }
 
+  .edit-toggle {
+    position: absolute;
+    bottom: 10px;
+    left: 14px;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.35);
+    color: rgba(255,255,255,0.6);
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 12px;
+    cursor: pointer;
+  }
+  .edit-toggle:active { opacity: 0.7; }
+
+  /* search */
   .search-wrap {
     padding: 12px 16px;
     background: #fff;
@@ -32,7 +47,6 @@
     top: 0;
     z-index: 10;
   }
-
   .search-wrap input {
     width: 100%;
     padding: 10px 14px;
@@ -43,9 +57,51 @@
     font-family: Arial, sans-serif;
     outline: none;
   }
-
   .search-wrap input:focus { border-color: #2c5f2e; }
 
+  /* edit toolbar */
+  .edit-bar {
+    display: none;
+    background: #fffbe6;
+    border-bottom: 2px solid #f0c040;
+    padding: 10px 16px;
+    font-size: 13px;
+    color: #7a5c00;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .edit-bar.visible { display: flex; }
+  .edit-bar strong { flex: 1; }
+  .btn-add {
+    background: #2c5f2e;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 7px;
+    font-size: 13px;
+    cursor: pointer;
+  }
+  .btn-save {
+    background: #1a3d1c;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 7px;
+    font-size: 13px;
+    cursor: pointer;
+  }
+  .btn-exit {
+    background: #fff;
+    color: #888;
+    border: 1px solid #ccc;
+    padding: 8px 14px;
+    border-radius: 7px;
+    font-size: 13px;
+    cursor: pointer;
+  }
+
+  /* cards */
   .cards { padding: 12px 16px; display: flex; flex-direction: column; gap: 10px; }
 
   .card {
@@ -54,21 +110,67 @@
     box-shadow: 0 1px 4px rgba(0,0,0,0.08);
     overflow: hidden;
     border-right: 4px solid #2c5f2e;
+    position: relative;
   }
-
   .card.deputy { border-right-color: #7aaa7c; }
 
   .card-header {
     background: #f7faf7;
     padding: 10px 14px 8px;
     border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
-
   .role-title {
     font-size: 15px;
     font-weight: 700;
     color: #1a3d1c;
+    flex: 1;
   }
+  .role-title-input {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1a3d1c;
+    flex: 1;
+    border: 1.5px solid #2c5f2e;
+    border-radius: 5px;
+    padding: 4px 8px;
+    font-family: Arial, sans-serif;
+    direction: rtl;
+    outline: none;
+    background: #f0f8f0;
+  }
+
+  /* reorder arrows */
+  .reorder-btns {
+    display: none;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .edit-mode .reorder-btns { display: flex; }
+  .reorder-btns button {
+    background: none;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    color: #2c5f2e;
+    line-height: 1;
+    padding: 1px 4px;
+  }
+  .reorder-btns button:disabled { color: #ccc; }
+
+  /* delete card */
+  .btn-delete-card {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    color: #c0392b;
+    padding: 0 4px;
+  }
+  .edit-mode .btn-delete-card { display: block; }
 
   .card-body { padding: 10px 14px; }
 
@@ -78,21 +180,42 @@
     justify-content: space-between;
     padding: 6px 0;
     border-bottom: 1px solid #f0f0f0;
+    gap: 8px;
   }
-
   .person-row:last-child { border-bottom: none; }
 
-  .person-info { display: flex; flex-direction: column; gap: 1px; }
+  .person-info { display: flex; flex-direction: column; gap: 1px; flex: 1; }
+  .person-label { font-size: 11px; color: #888; font-weight: 600; }
+  .person-name  { font-size: 15px; color: #1a1a1a; font-weight: 600; }
 
-  .person-label {
-    font-size: 11px;
-    color: #888;
+  .person-name-input {
+    font-size: 15px;
+    color: #1a1a1a;
     font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
+    border: 1.5px solid #aaa;
+    border-radius: 5px;
+    padding: 4px 8px;
+    font-family: Arial, sans-serif;
+    direction: rtl;
+    outline: none;
+    width: 100%;
+    background: #fafafa;
   }
+  .person-name-input:focus { border-color: #2c5f2e; }
 
-  .person-name { font-size: 15px; color: #1a1a1a; font-weight: 600; }
+  .phone-inputs { display: flex; flex-direction: column; gap: 4px; align-items: flex-end; }
+  .phone-input-field {
+    font-size: 13px;
+    border: 1.5px solid #aaa;
+    border-radius: 5px;
+    padding: 4px 8px;
+    font-family: monospace;
+    direction: ltr;
+    outline: none;
+    width: 130px;
+    background: #fafafa;
+  }
+  .phone-input-field:focus { border-color: #2c5f2e; }
 
   .phone-btn {
     display: flex;
@@ -109,23 +232,65 @@
     direction: ltr;
     flex-shrink: 0;
   }
+  .no-phone { font-size: 13px; color: #ccc; padding: 6px 10px; }
 
-  .phone-btn:active { background: #1a3d1c; }
+  .no-results { text-align: center; padding: 40px 16px; color: #aaa; font-size: 15px; }
 
-  .no-phone {
-    font-size: 13px;
-    color: #ccc;
-    padding: 6px 10px;
+  /* modal */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
   }
-
-  .no-results {
+  .modal-overlay.visible { display: flex; }
+  .modal {
+    background: #fff;
+    border-radius: 14px;
+    padding: 28px 24px;
+    width: 280px;
     text-align: center;
-    padding: 40px 16px;
-    color: #aaa;
-    font-size: 15px;
+    direction: rtl;
   }
-
-  .count { text-align: center; font-size: 12px; color: #888; margin-top: 4px; }
+  .modal h3 { font-size: 17px; margin-bottom: 8px; color: #1a3d1c; }
+  .modal p  { font-size: 13px; color: #777; margin-bottom: 16px; }
+  .modal input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid #ccc;
+    border-radius: 8px;
+    font-size: 18px;
+    text-align: center;
+    letter-spacing: 6px;
+    outline: none;
+    margin-bottom: 14px;
+  }
+  .modal input:focus { border-color: #2c5f2e; }
+  .modal .btn-confirm {
+    width: 100%;
+    background: #2c5f2e;
+    color: #fff;
+    border: none;
+    padding: 11px;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    margin-bottom: 8px;
+  }
+  .modal .btn-cancel {
+    width: 100%;
+    background: #f4f4f4;
+    color: #555;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  .modal .error-msg { color: #c0392b; font-size: 13px; margin-top: 6px; display: none; }
 </style>
 </head>
 <body>
@@ -133,80 +298,244 @@
 <header>
   <h1>בעלי תפקידים</h1>
   <p>קיבוץ עין השלושה · עדכון פברואר 2026</p>
+  <button class="edit-toggle" onclick="openPasswordModal()">✏️ עריכה</button>
 </header>
 
+<!-- password modal -->
+<div class="modal-overlay" id="passwordModal">
+  <div class="modal">
+    <h3>🔒 כניסה לעריכה</h3>
+    <p>הזן סיסמא להמשך</p>
+    <input type="password" id="passwordInput" placeholder="••••" maxlength="10" onkeydown="if(event.key==='Enter') confirmPassword()">
+    <button class="btn-confirm" onclick="confirmPassword()">כניסה</button>
+    <button class="btn-cancel"  onclick="closeModal()">ביטול</button>
+    <div class="error-msg" id="errorMsg">סיסמא שגויה, נסה שוב</div>
+  </div>
+</div>
+
+<!-- search -->
 <div class="search-wrap">
-  <input type="text" id="searchInput" placeholder="🔍  חיפוש לפי שם או תפקיד..." oninput="filter()">
-  <div class="count" id="countLabel"></div>
+  <input type="text" id="searchInput" placeholder="🔍  חיפוש לפי שם או תפקיד..." oninput="filterCards()">
+</div>
+
+<!-- edit toolbar -->
+<div class="edit-bar" id="editBar">
+  <strong>✏️ מצב עריכה פעיל</strong>
+  <button class="btn-add"  onclick="addNewCard()">+ הוסף תפקיד</button>
+  <button class="btn-save" onclick="saveChanges()">💾 שמור</button>
+  <button class="btn-exit" onclick="exitEdit()">יציאה</button>
 </div>
 
 <div class="cards" id="cardsContainer"></div>
 
 <script>
-const data = [
-  { role: 'יו"ר צח"י',             name: 'עופר פקרמן',        phone: '052-3764604', deputy: 'אבירן חסון',    deputyPhone: '050-5071693' },
-  { role: 'רבש"צ',                  name: 'מרסלו כהן',         phone: '052-3250018', deputy: 'ניקו פלסיק',    deputyPhone: '054-2503322', deputy2: 'דור בן צור', deputy2Phone: '052-9857049' },
-  { role: 'מנהלת הקהילה',           name: 'שירי אביב',         phone: '050-5915535', deputy: '',              deputyPhone: '' },
-  { role: 'רפואה',                  name: 'אבי מרום',          phone: '052-8262080', deputy: 'הודיה איתם',   deputyPhone: '054-6224051' },
-  { role: 'רווחה',                  name: 'דקלה יסעור',        phone: '052-8105971', deputy: 'יסמין מרום',   deputyPhone: '052-8272080' },
-  { role: 'תשתיות וקבלני חוץ',      name: 'ברוכי מרביד',       phone: '052-3925917', deputy: 'חנה פקרמן',    deputyPhone: '054-7915196' },
-  { role: 'חינוך',                  name: 'קלייר בשקיר',       phone: '052-3260059', deputy: 'אור ויצמן',    deputyPhone: '058-4347063' },
-  { role: 'קישור',                  name: 'גדעון דיאור',       phone: '052-6688854', deputy: '',              deputyPhone: '' },
-  { role: 'מידע לציבור',            name: 'שחר זגורי',         phone: '050-2613578', deputy: 'אורלי מזרחי',  deputyPhone: '052-3948088' },
-  { role: 'צמ"ד',                   name: 'מריוס דרייר',       phone: '053-7683766', deputy: 'יוסי לוי',     deputyPhone: '054-2415731' },
-  { role: 'תרבות',                  name: 'שיין לוי',          phone: '058-4524029', deputy: 'שחף פלסיק',    deputyPhone: '054-6939242' },
-  { role: 'צעירים וש"ש',            name: 'פלג קרישבויים',     phone: '053-6274202', deputy: 'מיטל לפלר',    deputyPhone: '052-4501572' },
-  { role: 'מזכירות',                name: 'דנה דהרי',          phone: '054-7917871', deputy: 'בת אור לפלר',  deputyPhone: '050-4976470' },
-  { role: 'יח"צ',                   name: 'שירי אביב',         phone: '050-5915535', deputy: 'עדיאל פורת',   deputyPhone: '050-3291115' },
-  { role: 'מרכז המשק',              name: 'עדיאל פורת',        phone: '050-3291115', deputy: '',              deputyPhone: '' },
-  { role: 'גזבר',                   name: 'מנדי',              phone: '054-2569612', deputy: '',              deputyPhone: '' },
-  { role: 'הנהל"ח',                 name: 'דומיניק',           phone: '052-4486149', deputy: 'נטלי',         deputyPhone: '050-8710633' },
-  { role: 'רכזת פינוי',             name: 'בתיה אונר',         phone: '052-3956913', deputy: 'אלה סוסקין',   deputyPhone: '052-4269798' },
+const PASSWORD = '5787';
+let editMode = false;
+
+// ── Initial data ─────────────────────────────────────────────────────────────
+const defaultData = [
+  { role:'יו"ר צח"י',            name:'עופר פקרמן',    phone:'052-3764604', deputy:'אבירן חסון',   deputyPhone:'050-5071693' },
+  { role:'רבש"צ',                 name:'מרסלו כהן',     phone:'052-3250018', deputy:'ניקו פלסיק',   deputyPhone:'054-2503322', deputy2:'דור בן צור', deputy2Phone:'052-9857049' },
+  { role:'מנהלת הקהילה',          name:'שירי אביב',     phone:'050-5915535', deputy:'',             deputyPhone:'' },
+  { role:'רפואה',                 name:'אבי מרום',      phone:'052-8262080', deputy:'הודיה איתם',  deputyPhone:'054-6224051' },
+  { role:'רווחה',                 name:'דקלה יסעור',    phone:'052-8105971', deputy:'יסמין מרום',  deputyPhone:'052-8272080' },
+  { role:'תשתיות וקבלני חוץ',     name:'ברוכי מרביד',   phone:'052-3925917', deputy:'חנה פקרמן',   deputyPhone:'054-7915196' },
+  { role:'חינוך',                 name:'קלייר בשקיר',   phone:'052-3260059', deputy:'אור ויצמן',   deputyPhone:'058-4347063' },
+  { role:'קישור',                 name:'גדעון דיאור',   phone:'052-6688854', deputy:'',             deputyPhone:'' },
+  { role:'מידע לציבור',           name:'שחר זגורי',     phone:'050-2613578', deputy:'אורלי מזרחי', deputyPhone:'052-3948088' },
+  { role:'צמ"ד',                  name:'מריוס דרייר',   phone:'053-7683766', deputy:'יוסי לוי',    deputyPhone:'054-2415731' },
+  { role:'תרבות',                 name:'שיין לוי',      phone:'058-4524029', deputy:'שחף פלסיק',   deputyPhone:'054-6939242' },
+  { role:'צעירים וש"ש',           name:'פלג קרישבויים', phone:'053-6274202', deputy:'מיטל לפלר',   deputyPhone:'052-4501572' },
+  { role:'מזכירות',               name:'דנה דהרי',      phone:'054-7917871', deputy:'בת אור לפלר', deputyPhone:'050-4976470' },
+  { role:'יח"צ',                  name:'שירי אביב',     phone:'050-5915535', deputy:'עדיאל פורת',  deputyPhone:'050-3291115' },
+  { role:'מרכז המשק',             name:'עדיאל פורת',    phone:'050-3291115', deputy:'',             deputyPhone:'' },
+  { role:'גזבר',                  name:'מנדי',          phone:'054-2569612', deputy:'',             deputyPhone:'' },
+  { role:'הנהל"ח',                name:'דומיניק',       phone:'052-4486149', deputy:'נטלי',         deputyPhone:'050-8710633' },
+  { role:'רכזת פינוי',            name:'בתיה אונר',     phone:'052-3956913', deputy:'אלה סוסקין',  deputyPhone:'052-4269798' },
 ];
 
+// Load from localStorage or use defaults
+let data = JSON.parse(localStorage.getItem('kibbutz_data') || 'null') || defaultData;
+
+// ── Password ─────────────────────────────────────────────────────────────────
+function openPasswordModal() {
+  document.getElementById('passwordModal').classList.add('visible');
+  document.getElementById('passwordInput').value = '';
+  document.getElementById('errorMsg').style.display = 'none';
+  setTimeout(() => document.getElementById('passwordInput').focus(), 100);
+}
+function closeModal() {
+  document.getElementById('passwordModal').classList.remove('visible');
+}
+function confirmPassword() {
+  const val = document.getElementById('passwordInput').value;
+  if (val === PASSWORD) {
+    closeModal();
+    enterEditMode();
+  } else {
+    document.getElementById('errorMsg').style.display = 'block';
+    document.getElementById('passwordInput').value = '';
+    document.getElementById('passwordInput').focus();
+  }
+}
+
+// ── Edit mode ─────────────────────────────────────────────────────────────────
+function enterEditMode() {
+  editMode = true;
+  document.body.classList.add('edit-mode');
+  document.getElementById('editBar').classList.add('visible');
+  render(data);
+}
+function exitEdit() {
+  editMode = false;
+  document.body.classList.remove('edit-mode');
+  document.getElementById('editBar').classList.remove('visible');
+  render(data);
+}
+
+// ── Collect current data from DOM ─────────────────────────────────────────────
+function collectData() {
+  const cards = document.querySelectorAll('.card[data-index]');
+  const result = [];
+  cards.forEach(card => {
+    const idx = card.dataset.index;
+    result.push({
+      role:         card.querySelector('.role-title-input')?.value   || card.querySelector('.role-title')?.textContent || '',
+      name:         card.querySelector('[data-field="name"]')?.value  || card.querySelector('[data-field="name-txt"]')?.textContent || '',
+      phone:        card.querySelector('[data-field="phone"]')?.value || '',
+      deputy:       card.querySelector('[data-field="deputy"]')?.value || card.querySelector('[data-field="deputy-txt"]')?.textContent || '',
+      deputyPhone:  card.querySelector('[data-field="dphone"]')?.value || '',
+      deputy2:      card.querySelector('[data-field="deputy2"]')?.value || card.querySelector('[data-field="deputy2-txt"]')?.textContent || '',
+      deputy2Phone: card.querySelector('[data-field="d2phone"]')?.value || '',
+    });
+  });
+  return result;
+}
+
+function saveChanges() {
+  data = collectData();
+  localStorage.setItem('kibbutz_data', JSON.stringify(data));
+  exitEdit();
+  alert('✅ השינויים נשמרו!');
+}
+
+// ── Reorder ───────────────────────────────────────────────────────────────────
+function moveCard(idx, dir) {
+  data = collectData();
+  const newIdx = idx + dir;
+  if (newIdx < 0 || newIdx >= data.length) return;
+  [data[idx], data[newIdx]] = [data[newIdx], data[idx]];
+  render(data);
+}
+
+function deleteCard(idx) {
+  if (!confirm('למחוק את התפקיד הזה?')) return;
+  data = collectData();
+  data.splice(idx, 1);
+  render(data);
+}
+
+function addNewCard() {
+  data = collectData();
+  data.push({ role:'תפקיד חדש', name:'', phone:'', deputy:'', deputyPhone:'', deputy2:'', deputy2Phone:'' });
+  render(data);
+  // scroll to bottom
+  setTimeout(() => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }), 100);
+}
+
+// ── Render ────────────────────────────────────────────────────────────────────
 function phoneBtn(phone) {
   if (!phone) return '<span class="no-phone">—</span>';
   return `<a class="phone-btn" href="tel:${phone}">📞 ${phone}</a>`;
 }
 
-function renderCard(item) {
+function phoneInput(field, val) {
+  return `<input class="phone-input-field" data-field="${field}" value="${val||''}" placeholder="050-0000000">`;
+}
+
+function nameInput(field, val) {
+  return `<input class="person-name-input" data-field="${field}" value="${val||''}" placeholder="שם...">`;
+}
+
+function renderCard(item, idx) {
   const hasDeputy  = item.deputy && item.deputy.trim();
   const hasDeputy2 = item.deputy2 && item.deputy2.trim();
+  const isFirst    = idx === 0;
+  const isLast     = idx === data.length - 1;
 
+  const roleField = editMode
+    ? `<input class="role-title-input" value="${item.role||''}">`
+    : `<span class="role-title">${item.role}</span>`;
+
+  const reorderBtns = `
+    <div class="reorder-btns">
+      <button onclick="moveCard(${idx},-1)" ${isFirst?'disabled':''}>▲</button>
+      <button onclick="moveCard(${idx},1)"  ${isLast?'disabled':''}>▼</button>
+    </div>`;
+
+  const deleteBtn = `<button class="btn-delete-card" onclick="deleteCard(${idx})" title="מחק">✕</button>`;
+
+  // main person row
+  const mainNameCell = editMode
+    ? nameInput('name', item.name)
+    : `<span class="person-name" data-field="name-txt">${item.name}</span>`;
+
+  const mainPhoneCell = editMode
+    ? phoneInput('phone', item.phone)
+    : phoneBtn(item.phone);
+
+  // deputy row
   let deputyRows = '';
-  if (hasDeputy) {
+  if (editMode || hasDeputy) {
+    const dNameCell = editMode
+      ? nameInput('deputy', item.deputy)
+      : `<span class="person-name" data-field="deputy-txt">${item.deputy}</span>`;
+    const dPhoneCell = editMode
+      ? phoneInput('dphone', item.deputyPhone)
+      : phoneBtn(item.deputyPhone);
+
     deputyRows += `
       <div class="person-row">
         <div class="person-info">
           <span class="person-label">סגן/ית</span>
-          <span class="person-name">${item.deputy}</span>
+          ${dNameCell}
         </div>
-        ${phoneBtn(item.deputyPhone)}
+        ${editMode ? `<div class="phone-inputs">${dPhoneCell}</div>` : dPhoneCell}
       </div>`;
   }
-  if (hasDeputy2) {
+
+  if (editMode || hasDeputy2) {
+    const d2NameCell = editMode
+      ? nameInput('deputy2', item.deputy2)
+      : `<span class="person-name" data-field="deputy2-txt">${item.deputy2}</span>`;
+    const d2PhoneCell = editMode
+      ? phoneInput('d2phone', item.deputy2Phone)
+      : phoneBtn(item.deputy2Phone);
+
     deputyRows += `
       <div class="person-row">
         <div class="person-info">
           <span class="person-label">סגן 2</span>
-          <span class="person-name">${item.deputy2}</span>
+          ${d2NameCell}
         </div>
-        ${phoneBtn(item.deputy2Phone)}
+        ${editMode ? `<div class="phone-inputs">${d2PhoneCell}</div>` : d2PhoneCell}
       </div>`;
   }
 
   return `
-    <div class="card" data-role="${item.role}" data-name="${item.name} ${item.deputy || ''} ${item.deputy2 || ''}">
+    <div class="card" data-index="${idx}">
       <div class="card-header">
-        <div class="role-title">${item.role}</div>
+        ${reorderBtns}
+        ${roleField}
+        ${deleteBtn}
       </div>
       <div class="card-body">
         <div class="person-row">
           <div class="person-info">
             <span class="person-label">ממונה</span>
-            <span class="person-name">${item.name}</span>
+            ${mainNameCell}
           </div>
-          ${phoneBtn(item.phone)}
+          ${editMode ? `<div class="phone-inputs">${mainPhoneCell}</div>` : mainPhoneCell}
         </div>
         ${deputyRows}
       </div>
@@ -214,27 +543,28 @@ function renderCard(item) {
 }
 
 function render(items) {
-  const container = document.getElementById('cardsContainer');
-  if (!items.length) {
-    container.innerHTML = '<div class="no-results">לא נמצאו תוצאות 🔍</div>';
-  } else {
-    container.innerHTML = items.map(renderCard).join('');
-  }
-  document.getElementById('countLabel').textContent = `${items.length} תפקידים`;
-}
-
-function filter() {
   const q = document.getElementById('searchInput').value.trim().toLowerCase();
-  if (!q) { render(data); return; }
-  const filtered = data.filter(item =>
-    item.role.includes(q) ||
-    item.name.toLowerCase().includes(q) ||
-    (item.deputy || '').toLowerCase().includes(q) ||
-    (item.deputy2 || '').toLowerCase().includes(q)
-  );
-  render(filtered);
+  const container = document.getElementById('cardsContainer');
+
+  let filtered = items;
+  if (q && !editMode) {
+    filtered = items.filter(it =>
+      it.role.includes(q) || it.name.toLowerCase().includes(q) ||
+      (it.deputy||'').toLowerCase().includes(q) || (it.deputy2||'').toLowerCase().includes(q)
+    );
+  }
+
+  if (!filtered.length) {
+    container.innerHTML = '<div class="no-results">לא נמצאו תוצאות 🔍</div>';
+    return;
+  }
+
+  container.innerHTML = (editMode ? items : filtered).map((it, i) => renderCard(it, i)).join('');
 }
 
+function filterCards() { render(data); }
+
+// ── Init ──────────────────────────────────────────────────────────────────────
 render(data);
 </script>
 </body>
